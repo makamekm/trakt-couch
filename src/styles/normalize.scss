@@ -1,0 +1,40 @@
+body {
+  font-family: Oswald, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(15, 19, 26);
+  color: rgb(237, 242, 247);
+  overflow-x: hidden;
+  max-width: 100vw;
+  user-select: none;
+}
+
+#root {
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-width: 100vw;
+  max-width: 100vw;
+  min-height: 100vh;
+  max-height: 100vh;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+div,
+* {
+  box-sizing: border-box;
+}
+
+a {
+  transition: opacity 0.1s;
+}
+
+a:not(.button):hover,
+a:not(.button):focus {
+  opacity: 0.6;
+}
