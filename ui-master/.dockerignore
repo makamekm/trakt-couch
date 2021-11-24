@@ -1,0 +1,6 @@
+node_modules
+npm-debug*
+.nuxt
+database.sqlite
+.env
+dist
