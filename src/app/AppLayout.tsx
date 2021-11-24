@@ -1,12 +1,13 @@
 import React from "react";
 import { ToastContainer } from "react-toastify";
-import { LayoutService } from "./LayoutService";
+import { LayoutService } from "~/services/LayoutService";
 import { observer } from "mobx-react";
 import { XFocusable } from "~/components/XFocusable/XFocusable";
 import { useHistory } from "react-router";
 import { TVKeys } from "./TVKeys";
 import { Logo } from "./Logo";
 import { SHOW_FULLSCREEN } from "@env/config";
+import { Background } from "~/components/Background/Background";
 
 export const AppLayout: React.FC = observer(({ children }) => {
   const history = useHistory();
@@ -40,6 +41,7 @@ export const AppLayout: React.FC = observer(({ children }) => {
   });
   return (
     <>
+      <Background />
       <ToastContainer
         position="bottom-right"
         autoClose={5000}

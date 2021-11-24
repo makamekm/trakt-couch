@@ -2,7 +2,7 @@ import React from "react";
 import cherio from "cheerio";
 import { useLocalStore, observer } from "mobx-react";
 import { useHistory } from "react-router";
-import { useLayoutConfig } from "./LayoutService";
+import { useLayoutConfig } from "~/services/LayoutService";
 import {
   XFocusableContainer,
   XFocusable,

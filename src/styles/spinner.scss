@@ -1,0 +1,40 @@
+@keyframes spin {
+  0% { content: '⠋' }
+ 10% { content: '⠙' }
+ 20% { content: '⠹' }
+ 30% { content: '⠸' }
+ 40% { content: '⠼' }
+ 50% { content: '⠴' }
+ 60% { content: '⠦' }
+ 70% { content: '⠧' }
+ 80% { content: '⠇' }
+ 90% { content: '⠏' }
+}
+
+body {
+ background: #111;
+ color: #fff;
+}
+
+html, body, .container {
+ width: 100%;
+ height: 100%;
+}
+
+.container {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
+.spinner {
+ font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.spinner:before {
+ display: inline-block;
+ content: '⠋';
+ animation: spin 1s linear infinite; 
+ vertical-align: middle;
+ margin-right: 10px;
+}

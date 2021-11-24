@@ -2,6 +2,18 @@
   "name": "hypervideochat",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "cross-env ENV=web run-p build-tailwind start:app start:worker",
+    "start:app": "react-app-rewired start",
+    "start:worker": "nodemon --watch src -e js --exec \"npm run dev:worker\"",
+    "dev:worker": "cra-append-sw --mode dev ./src/custom-service-worker.js",
+    "build": "cross-env ENV=web run-s build-tailwind build:app build:worker",
+    "build:app": "react-app-rewired build",
+    "build:worker": "cra-append-sw ./src/custom-service-worker.js",
+    "build-tailwind": "tailwindcss build src/tailwind.css -o src/tailwind.generated.css",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@testing-library/jest-dom": "^4.2.4",
@@ -56,18 +68,6 @@
     "visibilityjs": "^2.0.2",
     "webtorrent": "^0.108.6",
     "webtorrent-hybrid": "^4.0.1"
-  },
-  "scripts": {
-    "start": "cross-env ENV=web run-p build-tailwind start:app start:worker",
-    "start:app": "react-app-rewired start",
-    "start:worker": "nodemon --watch src -e js --exec \"npm run dev:worker\"",
-    "dev:worker": "cra-append-sw --mode dev ./src/custom-service-worker.js",
-    "build": "cross-env ENV=web run-s build-tailwind build:app build:worker",
-    "build:app": "react-app-rewired build",
-    "build:worker": "cra-append-sw ./src/custom-service-worker.js",
-    "build-tailwind": "tailwindcss build src/tailwind.css -o src/tailwind.generated.css",
-    "test": "react-app-rewired test",
-    "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -11,9 +11,9 @@ import { LoadingService } from "~/components/Loading/LoadingService";
 import { XFocusable } from "~/components/XFocusable/XFocusable";
 import { Focusable } from "~/components/Focusable/Focusable";
 import { useSimpleSyncLocalStorage } from "~/hooks";
-import { ProgressService } from "~/app/ProgressService";
+import { ProgressService } from "~/services/ProgressService";
 import { TVKeys } from "~/app/TVKeys";
-import { useLayoutConfig, LayoutService } from "~/app/LayoutService";
+import { useLayoutConfig, LayoutService } from "~/services/LayoutService";
 import { SHOW_FULLSCREEN } from "@env/config";
 
 const videojs = (window as any).videojs;

@@ -2,13 +2,13 @@ import React from "react";
 import cherio from "cheerio";
 import { useHistory } from "react-router";
 import { observer, useLocalStore } from "mobx-react";
-import { useLayoutConfig } from "./LayoutService";
+import { useLayoutConfig } from "~/services/LayoutService";
 import {
   XFocusableContainer,
   XFocusable,
 } from "~/components/XFocusable/XFocusable";
 import { LoadingService } from "~/components/Loading/LoadingService";
-import { FavoriteService } from "./FavoriteService";
+import { FavoriteService } from "~/services/FavoriteService";
 import { PROXY } from "@env/config";
 
 export const Dashboard = observer(() => {

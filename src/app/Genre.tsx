@@ -2,7 +2,7 @@ import React from "react";
 import cherio from "cheerio";
 import { useLocalStore, observer } from "mobx-react";
 import { useParams, useHistory } from "react-router";
-import { useLayoutConfig } from "./LayoutService";
+import { useLayoutConfig } from "~/services/LayoutService";
 import {
   XFocusableContainer,
   XFocusable,
@@ -16,7 +16,7 @@ function truncate(str: string, n: number) {
 
 export const Genre = observer(() => {
   const history = useHistory();
-  const { genre, page } = useParams();
+  const { genre, page } = useParams<any>();
   const pageNum = Number(page || 0);
   const loadingService = React.useContext(LoadingService);
   const state = useLocalStore(() => ({

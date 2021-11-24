@@ -2,7 +2,7 @@ import React from "react";
 import Fuse from "fuse.js";
 import { useHistory } from "react-router";
 import { observer, useLocalStore } from "mobx-react";
-import { useLayoutConfig } from "./LayoutService";
+import { useLayoutConfig } from "~/services/LayoutService";
 import { XFocusable } from "~/components/XFocusable/XFocusable";
 import { LoadingService } from "~/components/Loading/LoadingService";
 import { Focusable } from "~/components/Focusable/Focusable";

@@ -3,14 +3,14 @@ import cherio from "cheerio";
 import { useLocalStore, observer } from "mobx-react";
 import { useParams, useHistory } from "react-router";
 import { toJS } from "mobx";
-import { useLayoutConfig } from "./LayoutService";
+import { useLayoutConfig } from "~/services/LayoutService";
 import {
   XFocusableContainer,
   XFocusable,
 } from "~/components/XFocusable/XFocusable";
 import { LoadingService } from "~/components/Loading/LoadingService";
-import { FavoriteService } from "./FavoriteService";
-import { ProgressService } from "./ProgressService";
+import { FavoriteService } from "~/services/FavoriteService";
+import { ProgressService } from "~/services/ProgressService";
 import { PROXY } from "@env/config";
 
 export const TVShow = observer(() => {
