@@ -4,7 +4,13 @@ export const createHotPromise = () => {
     rr = resolve
     ee = reject
   })
-  promise.resolve = rr
-  promise.reject = ee
+  promise.resolve = (...args) => {
+    rr(...args)
+    promise.resolved = true
+  }
+  promise.reject = (...args) => {
+    ee(...args)
+    promise.resolved = true
+  }
   return promise
 }

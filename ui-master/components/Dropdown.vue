@@ -22,7 +22,7 @@
       </template>
       <div
         ref="menu"
-        class="flex flex-col space-y-1 p-1"
+        class="flex flex-col space-y-3 p-3"
       >
         <slot name="content" :events="slotContext" />
       </div>

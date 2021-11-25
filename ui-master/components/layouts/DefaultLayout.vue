@@ -8,7 +8,7 @@
     <Background />
     <Header />
     <div class="flex flex-1 items-stretch justify-start w-screen max-w-screen min-w-1px min-h-1px">
-      <LeftMenu />
+      <LeftMenu v-if="session" />
       <div class="flex flex-col flex-1 items-center justify-start items-center min-w-1px min-h-1px">
         <slot />
       </div>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 // import BottomNav from './BottomNav.vue'
 import Background from './Background.vue'
 import Header from './Header.vue'
@@ -38,16 +38,19 @@ export default {
     LeftMenu
   },
   computed: {
+    ...mapState('trakt', {
+      session: 'session'
+    }),
     ...mapGetters({
-      hasInitialized: 'user/hasInitialized'
+      hasInitialized: 'trakt/hasInitialized'
     })
   },
   mounted () {
-    this.initialize()
+    this.loadSession()
   },
   methods: {
     ...mapActions({
-      initialize: 'user/initialize'
+      loadSession: 'trakt/loadSession'
     })
   }
 }

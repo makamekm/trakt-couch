@@ -1,16 +1,24 @@
 import VuexPersistence from 'vuex-persist'
+import { traktFactory } from '~/api/trakt'
+import { createHotPromise } from '~/services/hot-promise'
 
 export default ({ store }) => {
-  new VuexPersistence({
-    modules: ['repository'],
-    reducer: (state) => {
-      return {
-        repository: {
-          form: state.repository.form,
-          repository: state.repository.repository
+  store.$trakt = traktFactory(store)
+  store.$storageInit = createHotPromise()
+
+  window.onNuxtReady(() => {
+    new VuexPersistence({
+      modules: ['trakt'],
+      reducer: (state) => {
+        return {
+          trakt: {
+            session: state.trakt.session
+          }
         }
-      }
-    },
-    storage: window.localStorage
-  }).plugin(store)
+      },
+      storage: window.localStorage
+    }).plugin(store)
+
+    store.$storageInit.resolve()
+  })
 }

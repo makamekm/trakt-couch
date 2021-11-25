@@ -27,17 +27,22 @@ export default {
   },
 
   router: {
-    middleware: 'user'
+    middleware: 'trakt'
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
   ],
 
+  proxy: {
+    '/api/trakt/': { target: 'https://api.trakt.tv/', pathRewrite: { '^/api/trakt/': '' } }
+  },
+
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/portal.js',
     '~/plugins/screen-size.js',
+    { src: '~/plugins/visibility', ssr: false },
     { src: '~/plugins/vuex-persist', ssr: false },
     { src: '~/plugins/spatial-navigation', ssr: false }
   ],
@@ -61,6 +66,7 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     'vue-toastification/nuxt'
   ],
 
@@ -69,11 +75,14 @@ export default {
   },
 
   env: {
-    baseUrl: process.env.BROWSER_BASE_URL || 'https://code-reporter.rowanberry.xyz'
+    baseUrl: process.env.BROWSER_BASE_URL || `http://localhost:${process.env.PORT}`,
+    client_id: '94ff3b02fe05bde15a5ccccc0bc3505477577fc9762bd82a9dd1cf545d681739',
+    client_secret: 'd598f018c26776a18c2c74ea39e6e2c9c94153472a1ae84c5bbada95bc1bdb40'
   },
 
   axios: {
-    baseURL: 'https://code-reporter.rowanberry.xyz'
+    baseURL: `http://localhost:${process.env.PORT}`,
+    proxy: true
   },
 
   publicRuntimeConfig: {

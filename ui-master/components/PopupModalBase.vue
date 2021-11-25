@@ -15,7 +15,7 @@
     @close="$emit('close')"
   >
     <div
-      class="flex flex-col rounded bg-white shadow menu-popup"
+      class="flex flex-col rounded-xl bg-black bg-opacity-50 shadow menu-popup"
     >
       <slot />
     </div>
@@ -34,8 +34,8 @@
     <slot name="modal-main" />
     <div
       v-if="!disablePopup"
-      class="flex flex-col bg-white shadow"
-      :class="{ 'menu-modal-bottom rounded-t': !mobileTop, 'menu-modal-top mx-2 rounded': mobileTop }"
+      class="flex flex-col bg-black bg-opacity-50 shadow"
+      :class="{ 'menu-modal-bottom rounded-t-xl': !mobileTop, 'menu-modal-top mx-2 rounded-xl': mobileTop }"
     >
       <slot />
     </div>

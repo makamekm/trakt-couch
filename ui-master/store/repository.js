@@ -168,7 +168,7 @@ export default {
         commit('setIsLoadingGenerate', true)
         try {
           const data = await this.$axios.$get(getUrlGenerate('/api/repository/generate', state.repository, state.form))
-          await dispatch('user/loadUserForce', null, { root: true })
+          await dispatch('trakt/loadCodeForce', null, { root: true })
           download(data, 'report.txt', 'text/plain')
         } catch (error) {
           this.$toast.error(error.response?.data?.message || error.message)

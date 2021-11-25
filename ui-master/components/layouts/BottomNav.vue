@@ -1,5 +1,5 @@
 <template>
-  <div v-if="user" class="fixed flex bottom-2 inset-x-0 mx-2 px-4 bg-white shadow-lg rounded-md justify-center items-center border-gray-200 h-19 lg:hidden bottom-panel">
+  <div v-if="session" class="fixed flex bottom-2 inset-x-0 mx-2 px-4 bg-white shadow-lg rounded-md justify-center items-center border-gray-200 h-19 lg:hidden bottom-panel">
     <div class="flex-1 group">
       <UserSettingsDropdown position-x="left" position-y="top">
         <template slot-scope="{ events: { toggle, blur, keyDown } }">
@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: 'user/user'
+      session: 'trakt/session'
     })
   }
 }

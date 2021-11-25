@@ -25,9 +25,9 @@
     right: 0;
     background: rgb(0,0,0);
     // background: linear-gradient(0deg, #945ae6 0%, #3E1E68 100%);
-    background: linear-gradient(0deg, #b078ff 0%, #3e1e6805 50%);
+    background: linear-gradient(0deg, #7851ad 0%, #681e1e 80%);
     //background: #3E1E68;
-    opacity: 0.4;
+    opacity: 0.75;
   }
 
   $particleSize: 20vmin;

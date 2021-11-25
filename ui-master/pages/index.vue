@@ -1,15 +1,15 @@
 <template>
   <div class="max-w-full">
-    <Demo />
+    <EntryPage />
   </div>
 </template>
 
 <script>
-import Demo from '@/components/Demo.vue'
+import EntryPage from '@/components/EntryPage.vue'
 
 export default {
   components: {
-    Demo
+    EntryPage
   }
 }
 </script>

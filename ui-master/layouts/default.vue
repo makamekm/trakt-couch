@@ -16,19 +16,16 @@ export default {
 </script>
 
 <style lang="scss">
-  @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
   body,
   html {
     min-width: 300px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1.25em;
   }
 
   body {
-    // font-family: Oswald, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    //   "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    //   sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: rgb(15, 19, 26);
@@ -58,10 +55,6 @@ export default {
   a:not(.button):hover,
   a:not(.button):focus {
     opacity: 0.6;
-  }
-
-  * {
-    font-family: 'Inter', sans-serif;
   }
 
   ::-webkit-scrollbar {
