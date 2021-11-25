@@ -1,39 +1,126 @@
 <template>
-  <img
+  <div
     v-observe-visibility="{
       callback: visibilityChanged,
       once: true,
     }"
-    :src="src"
-    alt="poster"
+    class="flex flex-col items-center justify-center h-80"
   >
+    <div class="relative">
+      <img
+        v-if="!isReset"
+        ref="image"
+        :data-src="src"
+        :alt="item.movie.title"
+        data-sizes="auto"
+        class="lazyload object-cover rounded-md w-52 max-h-80 h-72 group-focus:h-80 group-focus:w-56 transition-all duration-200 bg-white-600 group-focus:bg-white-700 group-focus:outline-none group-focus:ring-8 group-focus:ring-offset-8 group-focus:ring-red-700"
+        @load="onImageLoad"
+        @error="onImageLoadError"
+      >
+
+      <transition name="fade">
+        <div
+          v-if="isLoading"
+          class="absolute rounded-md left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-full h-full bg-black bg-opacity-60 flex items-center justify-center text-white z-10"
+        >
+          <svg fill="none" class="w-20 h-20 animate-spin" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path
+              clip-rule="evenodd"
+              d="M15.165 8.53a.5.5 0 01-.404.58A7 7 0 1023 16a.5.5 0 011 0 8 8 0 11-9.416-7.874.5.5 0 01.58.404z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </div>
+      </transition>
+    </div>
+  </div>
 </template>
 
 <script>
+import 'lazysizes'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   props: {
     item: { type: Object, requred: true, default: null }
   },
-  computed: {
-    ...mapGetters('movie-image', {
-      imagesProimse: 'imagesProimse',
-      images: 'images'
-    }),
-    src () {
-      return this.images(this.item)?.poster || 'https://walter.trakt.tv/images/movies/000/416/151/posters/thumb/ef9c109fbf.jpg.webp'
+  data () {
+    return {
+      isDownloading: true,
+      isError: false,
+      isReset: false
     }
   },
-  async mounted () {
+  computed: {
+    ...mapGetters('movie-image', {
+      poster: 'poster',
+      imagesIsLoading: 'imagesIsLoading'
+    }),
+    src () {
+      return this.poster(this.item) || '/img_broken.svg'
+    },
+    isLoading () {
+      return this.imagesIsLoading(this.item) || this.isDownloading
+    }
+  },
+  watch: {
+    src (value) {
+      if (value !== this.loadedSrc) {
+        this.doLoad()
+      }
+    }
+  },
+  mounted () {
+    this.doLoad()
   },
   methods: {
     ...mapActions('movie-image', {
-      loadImage: 'loadImage'
+      loadImage: 'loadImage',
+      clearImage: 'clearImage'
     }),
-    async visibilityChanged () {
+    async visibilityChanged (isVisible) {
+      if (isVisible) {
+        await this.loadImage(this.item)
+      }
+    },
+    async onImageLoad (e) {
+      this.isDownloading = false
+      if (!e.currentTarget?.width) {
+        this.isError = true
+        await this.clearImage(this.item)
+        await this.loadImage(this.item)
+      }
+    },
+    doLoad () {
+      this.isReset = true
+      this.isDownloading = true
+      this.$nextTick(() => {
+        this.isReset = false
+        this.isError = false
+        this.loadedSrc = this.src
+      })
+    },
+    async onImageLoadError (e) {
+      this.isDownloading = false
+      this.isError = true
+      await this.clearImage(this.item)
       await this.loadImage(this.item)
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+
+  img[src=""], img[src="#"], img:not([src]) {
+    opacity: 0;
+  }
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div v-focus-section="{ enterTo:'last-focused' }" class="flex flex-row items-center justify-between overflow-x-auto min-w-1px">
+  <div v-focus-section="{ enterTo:'last-focused' }" class="flex flex-row items-center justify-start overflow-x-auto min-w-1px">
     <slot />
   </div>
 </template>

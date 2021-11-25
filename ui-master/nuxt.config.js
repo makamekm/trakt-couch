@@ -16,13 +16,13 @@ export default {
     script: process.env.NODE_ENV === 'production'
       ? []
       : [
-          {
-            src: '//cdn.jsdelivr.net/npm/eruda'
-          },
-          {
-            type: 'text/javascript',
-            innerHTML: 'eruda.init();'
-          }
+          // {
+          //   src: '//cdn.jsdelivr.net/npm/eruda'
+          // },
+          // {
+          //   type: 'text/javascript',
+          //   innerHTML: 'eruda.init();'
+          // }
         ]
   },
 
@@ -35,7 +35,9 @@ export default {
   ],
 
   proxy: {
-    '/api/trakt/': { target: 'https://api.trakt.tv/', pathRewrite: { '^/api/trakt/': '' } }
+    '/api/trakt/': { target: 'https://api.trakt.tv/', pathRewrite: { '^/api/trakt/': '' } },
+    '/api/fanart/': { target: 'https://webservice.fanart.tv/v3/', pathRewrite: { '^/api/fanart/': '' } },
+    '/api/tmdb/': { target: 'https://api.themoviedb.org/3/', pathRewrite: { '^/api/tmdb/': '' } }
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -44,7 +46,9 @@ export default {
     '~/plugins/screen-size.js',
     { src: '~/plugins/visibility', ssr: false },
     { src: '~/plugins/vuex-persist', ssr: false },
-    { src: '~/plugins/spatial-navigation', ssr: false }
+    { src: '~/plugins/spatial-navigation', ssr: false },
+    { src: '~/plugins/resize', ssr: false },
+    { src: '~/plugins/snip', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -52,6 +56,7 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/composition-api/module',
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/tailwindcss
@@ -67,6 +72,7 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
+    'nuxt-use-motion',
     'vue-toastification/nuxt'
   ],
 

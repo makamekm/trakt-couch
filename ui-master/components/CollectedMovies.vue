@@ -1,22 +1,56 @@
 <template>
-  <div class="flex flex-col space-y-4 items-start justify-between py-20">
+  <div class="flex flex-col space-y-4 items-start justify-between py-10 w-screen">
     <div
-      class="max-w-full"
+      class="max-w-full w-full"
     >
-      <div class="font-semibold text-medium px-24">
-        Collected Movies:
+      <div class="text-medium px-24 text-4xl mb-10 opacity-80">
+        Collected Movies
       </div>
-      <HorizontalScrollContainer class="space-x-6 py-4 px-24 -mt-0">
+
+      <div v-if="selected" class="text-medium px-24 mb-4 space-y-2">
+        <div class="flex w-full justify-between items-center">
+          <div class="text-3xl h-8">
+            {{ selected.movie.title }} ({{ selected.movie.year }})
+          </div>
+          <div class="text-5xl font-semibold h-20 flex justify-center items-center">
+            <template v-if="selected.movie.rating">
+              {{ Number(selected.movie.rating).toFixed(1).toLocaleString() }}
+            </template>
+          </div>
+        </div>
+        <div v-snip="3" class="h-24">
+          {{ selected.movie.overview }}
+        </div>
+      </div>
+
+      <div v-else class="text-medium px-24 mb-4 space-y-2">
+        <div class="flex w-full justify-between items-center">
+          <div class="text-3xl h-8 w-60 w-1/4 bg-white bg-opacity-20 rounded-md" />
+          <div class="text-5xl h-20 w-20 bg-white bg-opacity-20 rounded-md" />
+        </div>
+        <div class="h-24 w-96 bg-white bg-opacity-20 rounded-md" />
+      </div>
+
+      <HorizontalScrollContainer v-if="isLoading" class="space-x-6 py-4 px-24">
+        <div
+          v-for="i in 3"
+          :key="i"
+          class="flex flex-col items-center justify-center h-80 animate-pulse"
+        >
+          <div class="w-52 h-72 bg-white bg-opacity-40 rounded-md" />
+        </div>
+      </HorizontalScrollContainer>
+
+      <HorizontalScrollContainer v-else class="space-x-6 py-4 px-24">
         <button
           v-for="item in collectedMovies"
           :key="item.movie.ids.trakt"
           v-focus
           class="first-focus min-w-max group flex items-center justify-between p-0 border border-transparent text-md font-medium rounded-md text-white focus:outline-none"
           @click="onClick"
+          @focus="selected = item"
         >
-          <div class="flex flex-col items-center justify-center h-80">
-            <MoviePoster :item="item" class="object-cover rounded-md w-52 max-h-80 h-auto group-focus:w-56 transition-all duration-200 bg-white-600 group-focus:bg-white-700 group-focus:outline-none group-focus:ring-8 group-focus:ring-offset-8 group-focus:ring-red-700" src="https://walter.trakt.tv/images/movies/000/416/151/posters/thumb/ef9c109fbf.jpg.webp" alt="sdfsdf" />
-          </div>
+          <MoviePoster :item="item" />
         </button>
       </HorizontalScrollContainer>
     </div>
@@ -32,6 +66,11 @@ export default {
   components: {
     HorizontalScrollContainer,
     MoviePoster
+  },
+  data () {
+    return {
+      selected: null
+    }
   },
   computed: {
     ...mapState('collection-movies', {
