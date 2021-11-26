@@ -1,7 +1,5 @@
 <template>
-  <div class="max-w-full">
-    <EntryPage />
-  </div>
+  <EntryPage />
 </template>
 
 <script>

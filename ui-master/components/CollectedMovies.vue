@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col space-y-4 items-start justify-between py-10 w-screen">
+  <div class="flex flex-col space-y-4 items-start justify-center py-16 w-screen min-h-full">
     <div
       class="max-w-full w-full"
     >
@@ -47,10 +47,10 @@
           :key="item.movie.ids.trakt"
           v-focus
           class="first-focus min-w-max group flex items-center justify-between p-0 border border-transparent text-md font-medium rounded-md text-white focus:outline-none"
-          @click="onClick"
+          @click="onClick(item)"
           @focus="selected = item"
         >
-          <MoviePoster :item="item" />
+          <MoviePosterSelectable :item="item" />
         </button>
       </HorizontalScrollContainer>
     </div>
@@ -60,12 +60,12 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import HorizontalScrollContainer from './HorizontalScrollContainer.vue'
-import MoviePoster from './MoviePoster.vue'
+import MoviePosterSelectable from './MoviePosterSelectable.vue'
 
 export default {
   components: {
     HorizontalScrollContainer,
-    MoviePoster
+    MoviePosterSelectable
   },
   data () {
     return {
@@ -85,8 +85,11 @@ export default {
     ...mapActions('collection-movies', {
       loadCollectionMovies: 'loadCollectionMovies'
     }),
-    onClick () {
-      console.log('dssdfsdf')
+    ...mapActions('router', {
+      setMovie: 'setMovie'
+    }),
+    onClick (item) {
+      this.setMovie(item)
     }
   }
 }

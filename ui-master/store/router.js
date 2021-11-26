@@ -25,20 +25,37 @@ export default {
     }
   },
   actions: {
-    changePage ({ commit }, value) {
+    setPage ({ commit }, value) {
       commit('page', value)
     },
-    changeMovie ({ commit }, value) {
+    setMovie ({ commit }, value) {
       commit('movie', value)
     },
-    changeShow ({ commit }, value) {
+    setShow ({ commit }, value) {
       commit('show', value)
     },
-    changeTorrent ({ commit }, value) {
+    setTorrent ({ commit }, value) {
       commit('torrent', value)
     },
-    changeSettings ({ commit }, value) {
+    setSettings ({ commit }, value) {
       commit('settings', value)
+    }
+  },
+  getters: {
+    page (state) {
+      return state.page
+    },
+    movie (state) {
+      return state.movie
+    },
+    show (state) {
+      return state.show
+    },
+    torrent (state) {
+      return state.torrent
+    },
+    settings (state) {
+      return state.settings
     }
   }
 }

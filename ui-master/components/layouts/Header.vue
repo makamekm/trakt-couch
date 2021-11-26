@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between items-center w-full px-4 py-4">
+  <div class="flex justify-between items-center w-full px-4 py-4 pr-6 shadow-lg bg-black bg-opacity-70">
     <div class="logo antialiased flex items-center space-x-3 mb-0 lg:m-0">
       <div class="text-xl">
         <img

@@ -25,7 +25,7 @@
     right: 0;
     background: rgb(0,0,0);
     // background: linear-gradient(0deg, #945ae6 0%, #3E1E68 100%);
-    background: linear-gradient(0deg, #7851ad 0%, #681e1e 80%);
+    background: linear-gradient(0deg, #924949 0%, #442323 80%);
     //background: #3E1E68;
     opacity: 0.75;
   }
@@ -44,9 +44,9 @@
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     $colors: (
-      #583C87,
-      #E45A84,
-      #FFACAC
+      #573c8781,
+      #e45a8381,
+      #ffacac83
     );
     @for $i from 1 through $amount {
       &:nth-child(#{$i}) {
