@@ -4,7 +4,7 @@
       <ChevronLeftIcon size="1.5x" />
     </button>
     <div class="transition-all duration-300" :class="{ 'w-0': hide, 'w-96': !hide }" />
-    <div class="fixed left-0 top-0 flex flex-col items-center justify-start h-full max-h-full bg-opacity-100 left-menu-overlay text-white overflow-auto w-96 max-w-96 border-r border-black border-opacity-10 shadow-lg bg-black" :class="{ 'hide': hide }" @mouseleave="onMouseLeave">
+    <div class="fixed left-0 top-0 flex flex-col items-center justify-start h-full max-h-full bg-opacity-100 left-menu-overlay text-white overflow-auto w-96 border-r border-black border-opacity-10 shadow-lg bg-black" :class="{ 'hide': hide }" @mouseleave="onMouseLeave">
       <div class="w-full px-4 py-4">
         <div class="logo antialiased flex items-center space-x-3 mb-0 lg:m-0">
           <div class="text-xl">
@@ -75,6 +75,8 @@ export default {
     },
     onClick () {
       this.hide = true
+      // eslint-disable-next-line no-self-assign
+      window.location.href = window.location.href
     }
   }
 }

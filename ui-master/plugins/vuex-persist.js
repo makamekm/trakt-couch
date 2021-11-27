@@ -44,6 +44,21 @@ export default ({ store }) => {
       storage: window.localStorage
     }).plugin(store)
 
+    new VuexPersistence({
+      key: 'torrent',
+      modules: ['torrent'],
+      reducer: (state) => {
+        return {
+          torrent: {
+            torrents: state.torrent.torrents,
+            movie: state.torrent.movie,
+            show: state.torrent.show
+          }
+        }
+      },
+      storage: window.localStorage
+    }).plugin(store)
+
     store.$storageInit.resolve()
   })
 }

@@ -1,0 +1,29 @@
+{
+  "name": "Загрузчик приложений",
+  "headline": "Загрузчик приложений",
+  "extension": "Версия MSX: 1.0.0",
+  "version": "1.0.0",
+  "parameter": "content:http://hp.my:4001/msx/start.json",
+  "note": "For this service, Media Station X 0.1.120 or higher is needed",
+  "pages": [
+    {
+      "items": [
+        {
+          "type": "control",
+          "image": "http://hp.my:4001/msx-logo.png",
+          "label": "Trakt Couch",
+          "action": "link:http://hp.my:4001",
+          "selection": {
+            "important": true,
+            "action": "update:content:description",
+            "data": {
+              "text": [
+                "{txt:msx-white: Trakt Couch} — Просмотр популярных фильмов, новинок, топ с возможностью полной синхронизации со всеми устройствами и т.д"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

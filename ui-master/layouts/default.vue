@@ -18,11 +18,17 @@ export default {
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+  html {
+    font-size: 1.25vw;
+  }
+
   body,
   html {
     min-width: 300px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.25em;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    // font-size: 1.25em;
+
+    //font-size: clamp(0.5rem, 0.2000rem + 0.6667vw, 1rem);
   }
 
   body {
@@ -36,6 +42,24 @@ export default {
     overflow-x: hidden;
     max-width: 100vw;
     user-select: none;
+  }
+
+  body {
+    min-height: 100vh;
+    /* mobile viewport bug fix */
+    min-height: -webkit-fill-available !important;
+  }
+
+  html {
+    height: -webkit-fill-available !important;
+  }
+
+  .min-h-screen {
+    min-height: -webkit-fill-available !important;
+  }
+
+  .max-h-screen {
+    max-height: -webkit-fill-available !important;
   }
 
   code {

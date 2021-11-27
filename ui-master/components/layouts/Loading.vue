@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center justify-center w-full h-full fixed left-0 top-0 bg-black bg-opacity-100 loading-overlay text-white" :class="{ 'hide': hide }">
-    <Background />
+    <!-- <Background /> -->
     <div class="flex justify-center items-center text-sm space-x-2">
       <div class="animate-pulse text-lg font-bold">
         Trakt
@@ -37,9 +37,9 @@
 </template>
 
 <script>
-import Background from './Background.vue'
+// import Background from './Background.vue'
 export default {
-  components: { Background },
+  // components: { Background },
   props: {
     hide: {
       type: Boolean,

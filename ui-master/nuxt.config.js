@@ -6,12 +6,12 @@ export default {
     title: 'Code Reporter',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, height=device-height, initial-scale=1.0, target-densityDpi=device-dpi' },
-      { hid: 'description', name: 'description', content: 'A better way to generate code for your reports. There are millions of GitHub repositories that are ready to help you get random code for your reports.' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
+      { hid: 'description', name: 'description', content: 'A better way to generate code for your reports. There are millions of GitHub repositories that are ready to help you get random code for your reports.' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: '/SegoeUI/stylesheet.css' }
     ],
     script: process.env.NODE_ENV === 'production'
       ? []
@@ -37,7 +37,9 @@ export default {
   proxy: {
     '/api/trakt/': { target: 'https://api.trakt.tv/', pathRewrite: { '^/api/trakt/': '' } },
     '/api/fanart/': { target: 'https://webservice.fanart.tv/v3/', pathRewrite: { '^/api/fanart/': '' } },
-    '/api/tmdb/': { target: 'https://api.themoviedb.org/3/', pathRewrite: { '^/api/tmdb/': '' } }
+    '/api/tmdb/': { target: 'https://api.themoviedb.org/3/', pathRewrite: { '^/api/tmdb/': '' } },
+    '/api/jacred/': { target: 'https://jac.red/api/v1.0/', pathRewrite: { '^/api/jacred/': '' } },
+    '/api/jackett/': { target: 'http://localhost:9117/jackett/', pathRewrite: { '^/api/jackett/': '' } }
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -61,8 +63,14 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/google-analytics'
+    '@nuxtjs/google-analytics',
+    '@nuxtjs/moment'
   ],
+
+  moment: {
+    defaultLocale: 'ru',
+    locales: ['ru']
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [

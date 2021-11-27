@@ -4,7 +4,7 @@
       callback: visibilityChanged,
       once: true,
     }"
-    class="flex flex-col items-center justify-center h-80"
+    class="flex flex-col items-center justify-center h-56"
   >
     <div class="relative">
       <img
@@ -13,7 +13,7 @@
         :data-src="src"
         :alt="item.movie.title"
         data-sizes="auto"
-        class="lazyload object-cover rounded-md w-52 max-h-80 h-72 group-focus:h-80 group-focus:w-56 transition-all duration-200 bg-white-600 group-focus:bg-white-700 group-focus:outline-none group-focus:ring-8 group-focus:ring-offset-8 group-focus:ring-red-700"
+        class="lazyload object-cover rounded-md w-36 max-h-56 h-48 group-focus:h-56 group-focus:w-40 transition-all duration-200 bg-white-600 group-focus:bg-white-700 group-focus:outline-none group-focus:ring-4 group-focus:ring-white"
         @load="onImageLoad"
         @error="onImageLoadError"
       >

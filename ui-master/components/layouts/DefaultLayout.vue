@@ -5,7 +5,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> -->
     <!-- <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons"> -->
-    <Background />
+    <!-- <Background /> -->
     <Header />
     <div class="flex flex-1 items-stretch justify-start w-screen max-w-screen min-w-1px min-h-1px">
       <LeftMenu v-if="session" />
@@ -26,7 +26,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 // import BottomNav from './BottomNav.vue'
 import EnterCode from '../EnterCode.vue'
-import Background from './Background.vue'
+// import Background from './Background.vue'
 import Header from './Header.vue'
 import Loading from './Loading.vue'
 import LeftMenu from './LeftMenu.vue'
@@ -34,7 +34,7 @@ import LeftMenu from './LeftMenu.vue'
 export default {
   components: {
     // BottomNav,
-    Background,
+    // Background,
     Header,
     Loading,
     LeftMenu,
