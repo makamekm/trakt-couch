@@ -3,22 +3,22 @@
     <div class="max-w-full w-full px-16">
       <div class="flex items-start justify-start space-x-16">
         <div class="w-48 flex items-start justify-end">
-          <MoviePoster :item="item" />
+          <ShowPoster :item="item" />
         </div>
         <div class="flex-1">
           <div class="text-medium mb-4 space-y-8">
             <div class="flex w-full justify-between items-center">
               <div class="text-4xl">
-                {{ item.movie.title }} ({{ item.movie.year }})
+                {{ item.show.title }} ({{ item.show.year }})
               </div>
               <div class="text-5xl font-semibold flex justify-center items-center">
-                <template v-if="item.movie.rating">
-                  {{ Number(item.movie.rating).toFixed(1).toLocaleString() }}
+                <template v-if="item.show.rating">
+                  {{ Number(item.show.rating).toFixed(1).toLocaleString() }}
                 </template>
               </div>
             </div>
             <div>
-              {{ item.movie.overview }}
+              {{ item.show.overview }}
             </div>
           </div>
         </div>
@@ -39,18 +39,6 @@
         </span>
         <span class="w-auto">Watch</span>
       </button>
-      <button
-        v-if="item.movie.trailer"
-        ref="watchBtn"
-        v-focus
-        class="min-w-max group flex space-x-4 items-center justify-between py-3 px-6 border border-transparent text-xl font-medium rounded-md text-white bg-black bg-opacity-40 focus:bg-red-700 focus:outline-none focus:ring-4 focus:ring-white transition duration-300"
-        @click="onWatchTrailer"
-      >
-        <span class="items-center transition duration-300">
-          <PlayIcon size="1x" />
-        </span>
-        <span class="w-auto">Trailer</span>
-      </button>
     </div>
   </div>
 </template>
@@ -61,11 +49,11 @@ import {
   PlayIcon,
   LoaderIcon
 } from 'vue-feather-icons'
-import MoviePoster from './MoviePoster.vue'
+import ShowPoster from './ShowPoster.vue'
 
 export default {
   components: {
-    MoviePoster,
+    ShowPoster,
     PlayIcon,
     LoaderIcon
   },
@@ -85,20 +73,12 @@ export default {
   },
   methods: {
     ...mapActions('torrent', {
-      searchMovieTorrents: 'searchMovieTorrents'
+      searchShowTorrents: 'searchShowTorrents'
     }),
     onWatchTorrent () {
       if (!this.isLoading) {
-        this.searchMovieTorrents(this.item)
+        this.searchShowTorrents(this.item)
       }
-    },
-    onWatchTrailer () {
-      // console.log(
-      //   this.item.movie.trailer
-      // )
-      // TVXInteractionPlugin?.executeAction('reload')
-      TVXInteractionPlugin?.executeAction('interaction:unload')
-      TVXInteractionPlugin?.executeAction('video:plugin:' + this.item.movie.trailer)
     }
   }
 }

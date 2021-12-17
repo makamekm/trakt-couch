@@ -1,4 +1,8 @@
 module.exports = {
+  globals: {
+    TVXInteractionPlugin: 'readonly',
+    TVXTools: 'readonly'
+  },
   root: true,
   env: {
     browser: true,

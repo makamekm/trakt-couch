@@ -13,7 +13,7 @@
       <button
         aria-label="Logout"
         type="button"
-        class="min-w-max group flex space-x-4 items-center justify-between py-2 px-8 border border-transparent text-md font-medium rounded text-white bg-black bg-opacity-40 focus:bg-red-700 focus:outline-none focus:ring-4 focus:ring-offset-4 focus:ring-red-700 transition duration-300"
+        class="min-w-max group flex space-x-4 items-center justify-between py-2 px-8 border border-transparent text-md font-medium rounded text-white bg-black bg-opacity-40 focus:bg-red-700 focus:outline-none focus:ring-2 focus:ring-white transition duration-300"
         tabindex="0"
         @click="close(); logout()"
         @keydown="keyDown"

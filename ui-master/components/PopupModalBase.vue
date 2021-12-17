@@ -109,7 +109,7 @@ export default {
   },
   computed: {
     isDesktop () {
-      return this.$vssWidth > 1024
+      return this.$vssWidth > 900
     }
   }
 }

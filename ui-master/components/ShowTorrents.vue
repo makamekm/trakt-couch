@@ -3,17 +3,17 @@
     <div class="flex items-stretch justify-start space-x-16 min-h-1px w-full h-full">
       <div class="w-48 break-words py-16">
         <div class="space-y-6">
-          <MoviePoster :item="item" />
+          <ShowPoster :item="item" />
           <div class="text-2xl font-bold opacity-70">
-            {{ item.movie.title }} ({{ item.movie.year }})
+            {{ item.show.title }} ({{ item.show.year }})
           </div>
           <div class="text-xl font-semibold opacity-60">
-            {{ item.movie.tagline }}
+            {{ item.show.tagline }}
           </div>
         </div>
       </div>
       <div class="flex-1 max-h-full h-full relative">
-        <div class="overflow-y-auto overflow-x-hidden max-h-full h-full px-4 pb-4 pt-16 absolute left-0 top-0 bottom-0 right-0">
+        <div class="overflow-y-auto overflow-x-hidden min-h-full max-h-full h-full px-4 pb-4 pt-16 absolute left-0 top-0 bottom-0 right-0">
           <div class="flex flex-col space-y-8">
             <button
               v-for="(torrent, index) in torrents"
@@ -54,8 +54,8 @@
                 </div>
               </div>
               <!-- <div class="text-5xl font-semibold flex justify-center items-center">
-              <template v-if="item.movie.rating">
-                {{ Number(item.movie.rating).toFixed(1).toLocaleString() }}
+              <template v-if="item.show.rating">
+                {{ Number(item.show.rating).toFixed(1).toLocaleString() }}
               </template>
             </div> -->
             </button>
@@ -72,21 +72,19 @@ import { mapActions, mapGetters } from 'vuex'
 //   PlayIcon,
 //   LoaderIcon
 // } from 'vue-feather-icons'
-import MoviePoster from './MoviePoster.vue'
+import ShowPoster from './ShowPoster.vue'
 
 export default {
   components: {
-    MoviePoster
+    ShowPoster
   },
   computed: {
     ...mapGetters('torrent', {
       torrents: 'torrents',
-      item: 'movie'
+      item: 'show'
     })
   },
   mounted () {
-    console.log(this.torrents)
-    console.log(this.item.movie)
     this.$refs.torrents?.[0]?.focus()
   },
   methods: {

@@ -29,9 +29,23 @@ export default {
       commit('isLoading', true)
       try {
         const query = encodeURIComponent(`${item.movie.title}`)
+        const torrents = await this.$axios.$get('/api/jackett/' + query)
+        // eslint-disable-next-line no-console
+        commit('torrents', { torrents: torrents.Results, movie: item })
+        return torrents
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error)
+      } finally {
+        commit('isLoading', false)
+      }
+    },
+    async searchMovieTorrentsOLD ({ commit }, item) {
+      commit('isLoading', true)
+      try {
+        const query = encodeURIComponent(`${item.movie.title}`)
         const torrents = await this.$axios.$get('/api/jacred/torrents?search=' + query)
         // eslint-disable-next-line no-console
-        console.log(torrents)
         commit('torrents', { torrents, movie: item })
         return torrents
       } catch (error) {
@@ -44,11 +58,10 @@ export default {
     async searchShowTorrents ({ commit }, item) {
       commit('isLoading', true)
       try {
-        const query = encodeURIComponent(`${item.movie.title}`)
-        const torrents = await this.$axios.$get('/api/jacred/torrents?search=' + query)
+        const query = encodeURIComponent(`${item.show.title}`)
+        const torrents = await this.$axios.$get('/api/jackett/' + query)
         // eslint-disable-next-line no-console
-        console.log(torrents)
-        commit('torrents', { torrents, show: item })
+        commit('torrents', { torrents: torrents.Results, show: item })
         return torrents
       } catch (error) {
         // eslint-disable-next-line no-console
@@ -60,7 +73,7 @@ export default {
   },
   getters: {
     torrents (state) {
-      return state.torrents.slice(0, 10)
+      return [...state.torrents].sort((a, b) => (b.Seeders + b.Peers / 20) - (a.Seeders + b.Peers / 20)).slice(0, 20)
     },
     isLoading (state) {
       return state.isLoading

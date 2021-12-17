@@ -13,17 +13,26 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: '/SegoeUI/stylesheet.css' }
     ],
-    script: process.env.NODE_ENV === 'production'
-      ? []
-      : [
-          // {
-          //   src: '//cdn.jsdelivr.net/npm/eruda'
-          // },
-          // {
-          //   type: 'text/javascript',
-          //   innerHTML: 'eruda.init();'
-          // }
-        ]
+    script: [
+      {
+        src: 'https://msx.benzac.de/js/tvx-plugin.min.js'
+      }
+      // {
+      //   type: 'text/javascript',
+      //   innerHTML: 'window.onload = function() { TVXInteractionPlugin.setupHandler({}); TVXInteractionPlugin.init(); };'
+      // }
+    ]
+    // script: process.env.NODE_ENV === 'production'
+    //   ? []
+    //   : [
+    //       // {
+    //       //   src: '//cdn.jsdelivr.net/npm/eruda'
+    //       // },
+    //       // {
+    //       //   type: 'text/javascript',
+    //       //   innerHTML: 'eruda.init();'
+    //       // }
+    //     ]
   },
 
   router: {
@@ -35,12 +44,18 @@ export default {
   ],
 
   proxy: {
-    '/api/trakt/': { target: 'https://api.trakt.tv/', pathRewrite: { '^/api/trakt/': '' } },
-    '/api/fanart/': { target: 'https://webservice.fanart.tv/v3/', pathRewrite: { '^/api/fanart/': '' } },
-    '/api/tmdb/': { target: 'https://api.themoviedb.org/3/', pathRewrite: { '^/api/tmdb/': '' } },
-    '/api/jacred/': { target: 'https://jac.red/api/v1.0/', pathRewrite: { '^/api/jacred/': '' } },
-    '/api/jackett/': { target: 'http://localhost:9117/jackett/', pathRewrite: { '^/api/jackett/': '' } }
+    // '/api/trakt/': { target: 'https://api.trakt.tv/', pathRewrite: { '^/api/trakt/': '' } },
+    '/api/fanart/': { target: 'https://webservice.fanart.tv/v3/', pathRewrite: { '^/api/fanart/': '' }, changeOrigin: true },
+    '/api/tmdb/': { target: 'https://api.themoviedb.org/3/', pathRewrite: { '^/api/tmdb/': '' }, changeOrigin: true },
+    '/api/jacred/': { target: 'https://jac.red/api/v1.0/', pathRewrite: { '^/api/jacred/': '' }, changeOrigin: true },
+    // '/api/jackett/': { target: 'http://localhost:9117/jackett/', pathRewrite: { '^/api/jackett/': '' } },
+    '/api/jackett/': { target: 'http://localhost:9117/api/v2.0/indexers/all/results?apikey=s7v6swvpl9evj90o0avq5yw1fmt6gc5b&Category%5B%5D=2000&Category%5B%5D=2010&Category%5B%5D=2020&Category%5B%5D=2040&Category%5B%5D=2045&Category%5B%5D=2060&Category%5B%5D=2070&Category%5B%5D=5000&Category%5B%5D=5020&Category%5B%5D=5030&Category%5B%5D=5040&Category%5B%5D=5045&Category%5B%5D=5050&Category%5B%5D=5060&Category%5B%5D=5070&Category%5B%5D=5080&Query=', pathRewrite: { '^/api/jackett/': '' } }
   },
+
+  serverMiddleware: [
+    { path: '/android', handler: '~/server-middleware/android' },
+    '~/server-middleware/torrent-to-magnet'
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -97,6 +112,19 @@ export default {
   axios: {
     baseURL: `http://localhost:${process.env.PORT}`,
     proxy: true
+    // proxyHeaders: false,
+    // credentials: false
+  },
+
+  render: {
+    static: {
+      setHeaders (res) {
+        res.setHeader('X-Frame-Options', 'ALLOWALL')
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        res.setHeader('Access-Control-Allow-Methods', 'GET')
+        res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+      }
+    }
   },
 
   publicRuntimeConfig: {

@@ -3,7 +3,7 @@
     <button :class="{ 'opacity-0 pointer-events-none': !hide, 'opacity-100 pointer-events-auto': hide }" class="fixed flex justify-center items-center w-auto px-1 h-16 absolute left-0 top-1/4 border border-transparent transform -translate-y-1/2 bg-black bg-opacity-40 rounded-tr-xl rounded-br-xl text-md font-medium text-white focus:bg-red-700 focus:outline-none focus:ring-8 focus:ring-offset-8 focus:ring-red-700 transition duration-300" @click="onFocus">
       <ChevronLeftIcon size="1.5x" />
     </button>
-    <div class="transition-all duration-300" :class="{ 'w-0': hide, 'w-96': !hide }" />
+    <div :class="{ 'w-0': hide, 'w-96': !hide }" />
     <div class="fixed left-0 top-0 flex flex-col items-center justify-start h-full max-h-full bg-opacity-100 left-menu-overlay text-white overflow-auto w-96 border-r border-black border-opacity-10 shadow-lg bg-black" :class="{ 'hide': hide }" @mouseleave="onMouseLeave">
       <div class="w-full px-4 py-4">
         <div class="logo antialiased flex items-center space-x-3 mb-0 lg:m-0">
@@ -32,18 +32,88 @@
           </div>
         </div>
       </div>
-      <div v-focus-section="{ enterTo:'last-focused' }" class="flex flex-col justify-start items-start text-sm space-y-2 mt-36">
-        <button
-          v-focus
-          class="text-left space-x-4 min-w-max group flex items-center justify-between py-2 px-4 rounded-md border border-transparent text-lg font-medium text-white bg-black bg-opacity-40 focus:bg-red-700 focus:outline-none focus:ring-8 focus:ring-offset-8 focus:ring-red-700 transition duration-300"
+
+      <div v-focus-section="{ enterTo:'last-focused' }" class="flex flex-col justify-start items-start text-sm space-y-4 mt-36">
+        <!-- <button
+          v-focus="page && page !== 'trending-movies'"
+          :class="{ 'opacity-60 bg-white bg-opacity-20': !(page && page !== 'trending-movies') }"
+          class="text-left space-x-4 min-w-max group flex items-center justify-between py-2 px-4 rounded-md border border-transparent text-lg font-medium text-white bg-opacity-40 focus:bg-red-700 focus:outline-none focus:ring-4 focus:ring-white transition duration-300"
           @focus="onFocus"
           @blur="onBlur"
-          @click="onClick"
+          @click="setPage('trending-movies')"
         >
           <span class="text-white transition duration-300">
-            <LockIcon />
+            <ActivityIcon />
           </span>
-          <span class="w-52">Sign in</span>
+          <span class="w-52">Trending Movies</span>
+        </button>
+
+        <button
+          v-focus="page !== 'trending-shows'"
+          :class="{ 'opacity-60 bg-white bg-opacity-20': !(page !== 'trending-shows') }"
+          class="text-left space-x-4 min-w-max group flex items-center justify-between py-2 px-4 rounded-md border border-transparent text-lg font-medium text-white bg-opacity-40 focus:bg-red-700 focus:outline-none focus:ring-4 focus:ring-white transition duration-300"
+          @focus="onFocus"
+          @blur="onBlur"
+          @click="setPage('trending-shows')"
+        >
+          <span class="text-white transition duration-300">
+            <ActivityIcon />
+          </span>
+          <span class="w-52">Trendding Shows</span>
+        </button> -->
+
+        <button
+          v-focus="page && page !== 'collected-movies'"
+          :class="{ 'opacity-60 bg-white bg-opacity-20': !(page && page !== 'collected-movies') }"
+          class="text-left space-x-4 min-w-max group flex items-center justify-between py-2 px-4 rounded-md border border-transparent text-lg font-medium text-white bg-opacity-40 focus:bg-red-700 focus:outline-none focus:ring-4 focus:ring-white transition duration-300"
+          @focus="onFocus"
+          @blur="onBlur"
+          @click="setPage('collected-movies')"
+        >
+          <span class="text-white transition duration-300">
+            <BoxIcon />
+          </span>
+          <span class="w-52">Collected Movies</span>
+        </button>
+
+        <button
+          v-focus="page !== 'collected-shows'"
+          :class="{ 'opacity-60 bg-white bg-opacity-20': !(page !== 'collected-shows') }"
+          class="text-left space-x-4 min-w-max group flex items-center justify-between py-2 px-4 rounded-md border border-transparent text-lg font-medium text-white bg-opacity-40 focus:bg-red-700 focus:outline-none focus:ring-4 focus:ring-white transition duration-300"
+          @focus="onFocus"
+          @blur="onBlur"
+          @click="setPage('collected-shows')"
+        >
+          <span class="text-white transition duration-300">
+            <TvIcon />
+          </span>
+          <span class="w-52">Collected Shows</span>
+        </button>
+
+        <button
+          v-focus
+          class="text-left space-x-4 min-w-max group flex items-center justify-between py-2 px-4 rounded-md border border-transparent text-lg font-medium text-white bg-opacity-40 focus:bg-red-700 focus:outline-none focus:ring-4 focus:ring-white transition duration-300"
+          @focus="onFocus"
+          @blur="onBlur"
+          @click="onReload"
+        >
+          <span class="text-white transition duration-300">
+            <RefreshCcwIcon />
+          </span>
+          <span class="w-52">Reload App</span>
+        </button>
+
+        <button
+          v-focus
+          class="text-left space-x-4 min-w-max group flex items-center justify-between py-2 px-4 rounded-md border border-transparent text-lg font-medium text-white bg-opacity-40 focus:bg-red-700 focus:outline-none focus:ring-4 focus:ring-white transition duration-300"
+          @focus="onFocus"
+          @blur="onBlur"
+          @click="onMainMenu"
+        >
+          <span class="text-white transition duration-300">
+            <XIcon />
+          </span>
+          <span class="w-52">Exit</span>
         </button>
       </div>
     </div>
@@ -51,19 +121,42 @@
 </template>
 
 <script>
-import { LockIcon, ChevronLeftIcon } from 'vue-feather-icons'
+import { mapGetters, mapActions } from 'vuex'
+import {
+  BoxIcon,
+  XIcon,
+  RefreshCcwIcon,
+  ChevronLeftIcon,
+  TvIcon
+  // ActivityIcon
+} from 'vue-feather-icons'
 
 export default {
   components: {
-    LockIcon,
-    ChevronLeftIcon
+    BoxIcon,
+    ChevronLeftIcon,
+    RefreshCcwIcon,
+    // ActivityIcon,
+    TvIcon,
+    XIcon
   },
   data () {
     return {
       hide: true
     }
   },
+  computed: {
+    ...mapGetters('router', {
+      page: 'page'
+    })
+  },
   methods: {
+    ...mapActions('router', {
+      setPage: 'setPage'
+    }),
+    // ...mapActions('torrent', {
+    //   resetTorrents: 'resetTorrents'
+    // }),
     onFocus () {
       this.hide = false
     },
@@ -73,10 +166,13 @@ export default {
     onMouseLeave () {
       this.hide = true
     },
-    onClick () {
+    onReload () {
       this.hide = true
       // eslint-disable-next-line no-self-assign
       window.location.href = window.location.href
+    },
+    async onMainMenu () {
+      // window.history.go(1 - window.history.length)
     }
   }
 }
@@ -85,7 +181,7 @@ export default {
 <style scoped>
   .left-menu-overlay {
     opacity: 1;
-    transition: all 0.3s;
+    /* transition: all 0.3s; */
     user-select: none;
     z-index: 1;
     pointer-events: all;

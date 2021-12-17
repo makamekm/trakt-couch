@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <TopNav class="hidden lg:flex" />
+    <TopNav />
   </div>
 </template>
 

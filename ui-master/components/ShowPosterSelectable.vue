@@ -8,7 +8,7 @@
         v-if="!isReset"
         ref="image"
         :data-src="src"
-        :alt="item.movie.title"
+        :alt="item.show.title"
         data-sizes="auto"
         class="lazyload object-cover rounded-md w-36 max-h-56 h-48 group-focus:h-56 group-focus:w-40 transition duration-200 bg-white-600 group-focus:bg-white-700 group-focus:outline-none group-focus:ring-4 group-focus:ring-white"
         @load="onImageLoad"
@@ -51,7 +51,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('movie-image', {
+    ...mapGetters('show-image', {
       poster: 'poster',
       imagesIsLoading: 'imagesIsLoading'
     }),
@@ -73,7 +73,7 @@ export default {
     this.doLoad()
   },
   methods: {
-    ...mapActions('movie-image', {
+    ...mapActions('show-image', {
       loadImage: 'loadImage',
       clearImage: 'clearImage'
     }),

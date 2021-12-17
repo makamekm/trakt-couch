@@ -4,9 +4,9 @@ import scrollIntoView from 'scroll-into-view'
 
 HTMLElement.prototype.scrollIntoView = function () {
   return scrollIntoView(this, {
-    maxSynchronousAlignments: 3,
+    maxSynchronousAlignments: 1,
     cancellable: true,
-    time: 200
+    time: 100
   })
 }
 

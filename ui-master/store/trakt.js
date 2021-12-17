@@ -6,20 +6,24 @@ export default {
     code: null,
     url: null,
     session: null,
-    initialized: false
+    initialized: false,
+    error: null
   }),
   mutations: {
-    setCode (state, code) {
+    code (state, code) {
       state.code = code || null
     },
-    setUrl (state, url) {
+    url (state, url) {
       state.url = url || null
     },
-    setSession (state, session) {
+    session (state, session) {
       state.session = session || null
     },
-    setInitialize (state, value) {
+    initialized (state, value) {
       state.initialized = value
+    },
+    error (state, value) {
+      state.error = value
     }
   },
   actions: {
@@ -30,10 +34,12 @@ export default {
 
       await this.$storageInit
 
+      commit('error', null)
+
       if (this.state.trakt.session) {
         this.$trakt.access_token = this.state.trakt.session.access_token
         this.$trakt.sessionInit.resolve()
-        commit('setInitialize', true)
+        commit('initialized', true)
         return this.state.trakt.session
       }
 
@@ -41,28 +47,29 @@ export default {
         const session = await this.$trakt
           .getCodes()
           .then((poll) => {
-            commit('setCode', poll.user_code)
-            commit('setUrl', poll.verification_url)
-            commit('setInitialize', true)
+            commit('code', poll.user_code)
+            commit('url', poll.verification_url)
+            commit('initialized', true)
             return this.$trakt.pollAccess(poll)
           })
-        commit('setSession', session)
+        commit('session', session)
         this.$trakt.access_token = session.access_token
         this.$trakt.sessionInit.resolve()
         return session
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error)
-        commit('setSession', null)
+        commit('session', null)
+        commit('error', error.message)
       } finally {
-        commit('setInitialize', true)
+        commit('initialized', true)
       }
     },
     loadSession: _.memoize(async function ({ dispatch }) {
       await dispatch('loadSessionForce')
     }),
-    resetSession ({ commit }) {
-      commit('setSession', null)
+    resession ({ commit }) {
+      commit('session', null)
     }
   },
   getters: {

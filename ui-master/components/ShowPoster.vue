@@ -1,6 +1,9 @@
 <template>
   <div
-    v-observe-visibility="visibilityChanged"
+    v-observe-visibility="{
+      callback: visibilityChanged,
+      once: true,
+    }"
     class="flex flex-col items-center justify-center h-56"
   >
     <div class="relative">
@@ -8,14 +11,14 @@
         v-if="!isReset"
         ref="image"
         :data-src="src"
-        :alt="item.movie.title"
+        :alt="item.show.title"
         data-sizes="auto"
-        class="lazyload object-cover rounded-md w-36 max-h-56 h-48 group-focus:h-56 group-focus:w-40 transition duration-200 bg-white-600 group-focus:bg-white-700 group-focus:outline-none group-focus:ring-4 group-focus:ring-white"
+        class="lazyload object-cover rounded-md w-40 max-h-56 h-56"
         @load="onImageLoad"
         @error="onImageLoadError"
       >
 
-      <transition v-if="isVisible" name="fade">
+      <transition name="fade">
         <div
           v-if="isLoading"
           class="absolute rounded-md left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-full h-full bg-black bg-opacity-60 flex items-center justify-center text-white z-10"
@@ -46,12 +49,11 @@ export default {
     return {
       isDownloading: true,
       isError: false,
-      isReset: false,
-      isVisible: false
+      isReset: false
     }
   },
   computed: {
-    ...mapGetters('movie-image', {
+    ...mapGetters('show-image', {
       poster: 'poster',
       imagesIsLoading: 'imagesIsLoading'
     }),
@@ -73,12 +75,11 @@ export default {
     this.doLoad()
   },
   methods: {
-    ...mapActions('movie-image', {
+    ...mapActions('show-image', {
       loadImage: 'loadImage',
       clearImage: 'clearImage'
     }),
     async visibilityChanged (isVisible) {
-      this.isVisible = isVisible
       if (isVisible) {
         await this.loadImage(this.item)
       }

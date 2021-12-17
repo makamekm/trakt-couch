@@ -6,6 +6,8 @@ export default ({ store }) => {
   store.$trakt = traktFactory(store)
   store.$storageInit = createHotPromise()
 
+  store.$overlays = []
+
   window.onNuxtReady(() => {
     new VuexPersistence({
       key: 'trakt',
@@ -27,6 +29,19 @@ export default ({ store }) => {
         return {
           'movie-image': {
             images: state['movie-image'].images
+          }
+        }
+      },
+      storage: window.localStorage
+    }).plugin(store)
+
+    new VuexPersistence({
+      key: 'show-image',
+      modules: ['show-image'],
+      reducer: (state) => {
+        return {
+          'show-image': {
+            images: state['show-image'].images
           }
         }
       },

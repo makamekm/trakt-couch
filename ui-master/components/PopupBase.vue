@@ -92,6 +92,11 @@ export default {
     show (value) {
       if (value) {
         this.getOffset()
+        if (!this.$store.$overlays.includes(this)) {
+          this.$store.$overlays.push(this)
+        }
+      } else if (this.$store.$overlays.includes(this)) {
+        this.$store.$overlays.splice(this.$store.$overlays.findIndex(p => p === this.$store.$overlays), 1)
       }
     }
   },
@@ -102,13 +107,23 @@ export default {
       }
 
       const ESC = 27
-      const BASKSPACE = 8
-      if (e.keyCode !== ESC && e.keyCode !== BASKSPACE && this.show) {
+      if (e.keyCode !== ESC && this.show) {
         return
       }
 
       this.$emit('close')
     }
+
+    const onRouteChange = () => {
+      if (this.show && this.$store.$overlays[0] === this) {
+        this.$emit('close')
+      }
+    }
+
+    window.addEventListener('popstate', onRouteChange)
+    this.$on('hook:destroyed', () => {
+      window.removeEventListener('popstate', onRouteChange)
+    })
 
     const closeIfOutside = (e) => {
       if (!this.closeOutside) {

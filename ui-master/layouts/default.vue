@@ -1,5 +1,5 @@
 <template>
-  <DefaultLayout>
+  <DefaultLayout :class="{'iframe': iFrame}">
     <Nuxt />
   </DefaultLayout>
 </template>
@@ -11,7 +11,84 @@ export default {
   components: {
     DefaultLayout
   },
-  layout: 'default'
+  layout: 'default',
+  data () {
+    return {
+      iFrame: false
+    }
+  },
+  mounted () {
+    this.iFrame = window.self !== window.top
+    // TVXInteractionPlugin?.init()
+    if (TVXInteractionPlugin) {
+      function MyHandler () {
+        this.init = function () {
+          // Init handler
+        }
+        this.ready = function () {
+          // Handler is ready
+          // TVXInteractionPlugin?.executeAction('invalidate:content')
+          // TVXInteractionPlugin?.executeAction('invalidate:panel')
+          // TVXInteractionPlugin?.executeAction('invalidate:menu')
+
+          // TVXInteractionPlugin?.executeAction('release:menu')
+          // TVXInteractionPlugin?.executeAction('release:panel')
+          // TVXInteractionPlugin?.executeAction('release:content')
+        }
+        this.handleEvent = function (data) {
+          if (data.event === 'app:result') {
+            // Note: The property data.id contains the request ID
+            // Note: The property data.code contains the result code
+            // -3: Internal Error
+            // -2: Launch Error
+            // -1: OK
+            //  0: Canceled
+            //  1: ---
+            //  2: Connection Failed (VLC)
+            //  3: Playback Error (VLC)
+            //  4: Hardware Acceleration Error (VLC)
+            //  5: Video Track Lost (VLC)
+            // Note: The properties inside the data.extra property are application-specific
+            // alert(TVXTools.serialize(data))
+            TVXInteractionPlugin.info('Result: ' + TVXTools.serialize(data), true, false)// Log, but do not show
+          }
+          // Handle event
+        }
+        this.handleData = function (data) {
+          // Handle data
+        }
+        this.handleRequest = function (dataId, data, res) {
+          res({
+            type: 'list',
+            important: false,
+            wrap: true,
+            transparent: 1,
+            template: {
+              type: 'separate',
+              layout: '0,0,2,4',
+              transparent: 1
+            },
+            pages: [
+              {
+                items: [
+                  {
+                    type: 'control',
+                    layout: '0,0,5,1',
+                    label: '',
+                    offset: '-10.0,-10.0,0.0,0.0'
+                  }
+                ]
+              }
+            ]
+          })
+        }
+      }
+      window.onload = function () {
+        TVXInteractionPlugin.setupHandler(new MyHandler())
+        TVXInteractionPlugin.init()
+      }
+    }
+  }
 }
 </script>
 
@@ -47,18 +124,18 @@ export default {
   body {
     min-height: 100vh;
     /* mobile viewport bug fix */
-    min-height: -webkit-fill-available !important;
+    // min-height: -webkit-fill-available !important;
   }
 
   html {
     height: -webkit-fill-available !important;
   }
 
-  .min-h-screen {
+  .iframe .min-h-screen {
     min-height: -webkit-fill-available !important;
   }
 
-  .max-h-screen {
+  .iframe .max-h-screen {
     max-height: -webkit-fill-available !important;
   }
 

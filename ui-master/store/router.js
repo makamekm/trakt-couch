@@ -25,7 +25,8 @@ export default {
     }
   },
   actions: {
-    setPage ({ commit }, value) {
+    setPage ({ commit, dispatch }, value) {
+      dispatch('resetRouter')
       commit('page', value)
     },
     setMovie ({ commit }, value) {
@@ -39,6 +40,14 @@ export default {
     },
     setSettings ({ commit }, value) {
       commit('settings', value)
+    },
+    resetRouter ({ commit, dispatch }) {
+      dispatch('torrent/resetTorrents', null, { root: true })
+      commit('page', null)
+      commit('movie', null)
+      commit('show', null)
+      commit('torrent', null)
+      commit('settings', null)
     }
   },
   getters: {
